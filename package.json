@@ -1,0 +1,17 @@
+{
+  "name": "nui-quick-parsec",
+  "version": "1.0.0",
+  "description": "Open Parsec quickly",
+  "main": "app.js",
+  "scripts": {
+    "start": "electron app.js"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^3.0.2"
+  },
+  "dependencies": {
+    "electron-json-storage": "^4.1.6",
+    "request": "^2.88.0"
+  }
+}
