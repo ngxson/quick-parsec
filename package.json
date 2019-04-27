@@ -4,11 +4,13 @@
   "description": "Open Parsec quickly",
   "main": "app.js",
   "scripts": {
-    "start": "electron app.js"
+    "start": "electron app.js",
+    "build": "electron-packager . nui-quick-parsec --platform=win32 --arch=x64"
   },
   "license": "ISC",
   "devDependencies": {
-    "electron": "^3.0.2"
+    "electron": "^3.0.2",
+    "electron-packager": "^13.1.1"
   },
   "dependencies": {
     "electron-json-storage": "^4.1.6",
