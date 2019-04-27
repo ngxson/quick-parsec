@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "electron-json-storage": "^4.1.6",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "ws": "^6.2.1"
   }
 }

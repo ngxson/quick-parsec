@@ -1,6 +1,7 @@
 
 const request = require('request')
 const savedData = require('../../utils/saved-data')
+const navigate = require('../../utils/navigate')
 
 $(() => {
   init()
@@ -29,7 +30,7 @@ function doLogin() {
       alert(body.error)
     } else if (body.session_id) {
       savedData.save('session_id', body.session_id)
-      // TODO: redirect to home
+      navigate('/activity/list-servers/')
     } else {
       alert('Unknown error')
     }

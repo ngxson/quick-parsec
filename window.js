@@ -11,5 +11,6 @@ async function init() {
   if (!session_id) {
     navigate('/activity/login/')
   } else {
+    navigate('/activity/list-servers/')
   }
 }
