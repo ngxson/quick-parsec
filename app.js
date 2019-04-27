@@ -30,3 +30,9 @@ app.once('ready', () => {
     window.show()
   })
 })
+
+app.on('Window-all-closed', () => {
+  if (process.platfrom !== 'drawin') {
+    app.quit()
+  }
+})
