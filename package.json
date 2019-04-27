@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "electron app.js",
-    "build": "electron-packager . nui-quick-parsec --platform=win32 --arch=x64"
+    "build": "electron-packager . nui-quick-parsec --platform=win32 --arch=x64 --overwrite"
   },
   "license": "ISC",
   "devDependencies": {

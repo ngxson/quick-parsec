@@ -67,10 +67,11 @@ function btnConnect(i) {
   if (isConnecting) return
   isConnecting = true
   daemon.connect(session_id, listServer[i].server_id, listServer[i].build).then(status => {
-    isConnecting = false
     if (status == 0) {
-      let w = remote.getCurrentWindow()
-      w.close()
+      remote.app.exit()
+      remote.getCurrentWindow().close()
+    } else {
+      isConnecting = false
     }
   })
 }
@@ -107,7 +108,7 @@ function setupRefreshTimer() {
 }
 
 function checkAutoConnect(i) {
-  if (default_server_id == listServer[i].server_id) {
+  if (default_server_id == listServer[i].server_id && listServer[i].status === 'on') {
     btnConnect(i)
   }
 }

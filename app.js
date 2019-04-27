@@ -5,7 +5,7 @@ const url = require('url') // https://nodejs.org/api/url.html
 let window = null
 
 // Wait until the app is ready
-app.once('ready', () => {
+const createWindow = () => {
   // Create a new window
   window = new BrowserWindow({
     // Set the initial width to 400px
@@ -29,10 +29,21 @@ app.once('ready', () => {
   window.once('ready-to-show', () => {
     window.show()
   })
-})
+}
 
-app.on('Window-all-closed', () => {
-  if (process.platfrom !== 'drawin') {
-    app.quit()
+app.on('ready', createWindow)
+
+// Quit when all windows are closed.
+app.on('window-all-closed', app.quit);
+app.on('before-quit', () => {
+  window.removeAllListeners('close');
+  window.close();
+});
+
+app.on('activate', function() {
+  // On OS X it's common to re-create a window in the app when the
+  // dock icon is clicked and there are no other windows open.
+  if (mainWindow === null) {
+    createWindow()
   }
 })
