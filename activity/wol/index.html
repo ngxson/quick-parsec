@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+
+  <title>Auto Wake-on-LAN</title>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../styles.css">
+
+  <!-- Scripts -->
+  <script>
+    delete module.exports
+  </script>
+  <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+  <script src="window.js"></script>
+</head>
+
+<body>
+  <div id="container" class="container-fluid">
+
+    <div class="">
+      <div class="col-12">
+        <h1>Auto Wake-on-LAN</h1>
+      </div>
+      <div class="col-12">
+        MAC address:<br>
+        <input type="text" id="mac" required>
+      </div>
+      <div class="col-12">
+        IP address (optional):<br>
+        <input type="text" id="ip" required>
+      </div>
+      <div class="col-12">
+        Port (optional, default is 9):<br>
+        <input type="text" id="port" required>
+      </div>
+      <div class="col-12">
+        <br>
+        <button class="btn btn-success" onclick="save()">Save</button>&nbsp;&nbsp;
+        <button class="btn btn-default" onclick="back()">Back</button>
+      </div>
+    </div>
+
+  </div>
+</body>
+
+</html>

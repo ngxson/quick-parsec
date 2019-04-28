@@ -7,10 +7,12 @@ storage.setDataPath(os.tmpdir())
 
 module.exports = {
   save: (key, value) => {
-    storage.get(FILE_NAME, (error, data) => {
-      if (!data) data = {}
-      data[key] = value
-      storage.set(FILE_NAME, data)
+    return new Promise(resolve => {
+      storage.get(FILE_NAME, (error, data) => {
+        if (!data) data = {}
+        data[key] = value
+        storage.set(FILE_NAME, data, resolve)
+      })
     })
   },
   get: (key) => {

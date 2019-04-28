@@ -3,13 +3,18 @@ const request = require('request')
 const savedData = require('../../utils/saved-data')
 const navigate = require('../../utils/navigate')
 const daemon = require('../../utils/parsec-daemon')
-const remote = require('electron').remote
+const wol = require('../../utils/wol')
+const { remote } = require('electron')
+const path = require('path')
+const url = require('url')
+const BrowserWindow = remote.BrowserWindow
 var session_id = null,
   default_server_id = null,
   listServer = []
 
 $(() => {
   init()
+  wol(savedData)
 })
 
 async function init() {
@@ -51,7 +56,7 @@ function renderListServer() {
         ---------------<br>
         <b>${server.name}</b> (${server.status})<br>
         ${isDefault
-          ? '<button class="btn btn-success">Open by default</button>'
+          ? '<button class="btn btn-success" id="txt-auto-connect" onclick="btnAbortAutoConnect()">Open by default</button>'
           : '<button class="btn btn-default" onclick="btnSetDefault(' + i + ')">Set default</button>'
         }&nbsp;&nbsp;
         <button class="btn btn-default" onclick="btnConnect(${i})">Connect</button>&nbsp;&nbsp;
@@ -77,6 +82,7 @@ function btnConnect(i) {
 }
 
 function btnSetDefault(i) {
+  autoConnectEnable = false
   savedData.save('server_id', listServer[i].server_id)
   savedData.save('server_build', listServer[i].build)
   default_server_id = listServer[i].server_id
@@ -96,6 +102,7 @@ function setupRefreshTimer() {
   refreshTimerCount = 6
   refreshFunc = () => {
     if (refreshTimerCount == 0) {
+      clearInterval(refreshTimerId)
       refreshList()
       $('#txt-refresh-in').text('Refreshing...')
     } else {
@@ -107,8 +114,32 @@ function setupRefreshTimer() {
   refreshFunc()
 }
 
+var autoConnectTimerId = 0
+var autoConnectTimerCount = 4
+var autoConnectEnable = true
 function checkAutoConnect(i) {
+  if (!autoConnectEnable) return
   if (default_server_id == listServer[i].server_id && listServer[i].status === 'on') {
-    btnConnect(i)
+    let autoConnectTimerFunc = () => {
+      if (autoConnectTimerCount == 0) {
+        clearInterval(autoConnectTimerId)
+        btnConnect(i)
+        $('#txt-auto-connect').text('Connecting...')
+      } else {
+        autoConnectTimerCount -= 1
+        $('#txt-auto-connect').text('Auto connect in ' + autoConnectTimerCount + ' secs. Click to abort')
+      }
+    }
+    autoConnectTimerId = setInterval(autoConnectTimerFunc, 1000)
   }
+}
+
+function btnAbortAutoConnect() {
+  autoConnectEnable = false
+  clearInterval(autoConnectTimerId)
+  $('#txt-auto-connect').text('Open by default')
+}
+
+function openWOL() {
+  navigate('/activity/wol/')
 }
