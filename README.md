@@ -1,25 +1,26 @@
-# Prices
+# Quick Parsec
 
-Simple [Electron](http://electronjs.org) application that shows the current
-price of oil, gold, and silver using the STOOQ API.
+TL;DR: Parsec Gaming + Wake-on-LAN 
 
-![screenshot](https://cloud.githubusercontent.com/assets/671378/21198004/6e7a3798-c1f2-11e6-8228-495de90b7797.png)
+## What is this?
 
-## Getting started
+Let's consider the scenario where you have a headless PC. In order to connect to that PC, you might have to do many steps:
 
-- Install [Node LTS](https://nodejs.org)
-- Clone this repository
-- `cd prices`
-- `npm install` to install the application's dependencies
-- `npm start` to start the application
+1. Turn it on (by pressing the power button or using WOL)
+2. Open Parsec
+3. Wait for the PC to be shown up in the list
+4. Click on the "Connect" button
 
-## Going further
+**Quick Parsec** will do these steps automatically.
 
-Here are some ideas on how it can be improved using other Electron APIs.
+## How to use
 
-- Double-click commodity to open directly on https://stooq.com
-- Refresh automatically on an interval.
-- Add the price of platinum (`PL=F`) to the app.
-- Export prices to a `.csv` file.
-- Show percentage change in price.
-- Show notifications when prices go above/below certain amounts.
+Download the app from [releases](https://github.com/ngxson/quick-parsec/releases)
+
+Run `quick-parsec.exe`
+
+## Available script
+
+`npm run start`: Start debug app
+
+`npm run build`: Build the app (right now only support for Windows x64)
