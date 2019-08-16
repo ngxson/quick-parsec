@@ -27,10 +27,10 @@ async function init() {
 
 function refreshList() {
   request({
-    url: 'https://parsecgaming.com/v1/server-list?include_managed=true',
+    url: 'https://kessel-api.parsecgaming.com/hosts',
     method: 'post',
     headers: {
-      'X-Parsec-Session-Id': session_id,
+      'Authorization': `Bearer ${session_id}`,
     }
   }, (err, res, body) => {
     body = JSON.parse(body)
