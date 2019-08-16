@@ -1,7 +1,7 @@
 const WebSocket = require('ws')
 
 module.exports = {
-  connect: (session_id, server_id, server_build) => {
+  connect: (session_id, peer_id, server_build) => {
     return new Promise(resolve => {
       const ws = new WebSocket('ws://127.0.0.1:5309/', [], {
         headers: {
@@ -15,7 +15,7 @@ module.exports = {
       let req = {
         "ipc_to": makeid(40),
         "server_build": server_build.toString(),
-        "server_id": server_id.toString(),
+        "peer_id": peer_id.toString(),
         "session_id": session_id,
         "x-function": "app_client",
       }

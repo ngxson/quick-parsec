@@ -28,20 +28,23 @@ async function init() {
 function refreshList() {
   request({
     url: 'https://kessel-api.parsecgaming.com/hosts',
-    method: 'post',
+    method: 'GET',
     headers: {
       'Authorization': `Bearer ${session_id}`,
+      'Referer': 'https://ui.parsecgaming.com/',
+      'Sec-Fetch-Mode': 'cors',
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36'
     }
   }, (err, res, body) => {
     body = JSON.parse(body)
 
-    if (body.error) {
+    if (body.error || !body.data) {
       alert(body.error)
       navigate('/activity/login/')
       return
     }
 
-    listServer = body
+    listServer = body.data
     renderListServer()
     setupRefreshTimer()
   })
@@ -54,7 +57,7 @@ function renderListServer() {
     return `
       <div class="col-12">
         ---------------<br>
-        <b>${server.name}</b> (${server.status})<br>
+        <b>${server.name}</b><br/>peer_id: ${server.peer_id}<br>
         ${isDefault
           ? '<button class="btn btn-success" id="txt-auto-connect" onclick="btnAbortAutoConnect()">Open by default</button>'
           : '<button class="btn btn-default" onclick="btnSetDefault(' + i + ')">Set default</button>'
@@ -71,7 +74,7 @@ var isConnecting = false
 function btnConnect(i) {
   if (isConnecting) return
   isConnecting = true
-  daemon.connect(session_id, listServer[i].server_id, listServer[i].build).then(status => {
+  daemon.connect(session_id, listServer[i].peer_id, listServer[i].build).then(status => {
     if (status == 0) {
       remote.app.exit()
       remote.getCurrentWindow().close()
